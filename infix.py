@@ -40,10 +40,11 @@ class infix(object):
         """Decorates ``func``"""
         update_wrapper(self, func)
         self.func = func
-    
-    def __call__(self, left, right, *args, **kwargs):
-        """Applies the function"""
-        return self.func(left, right, *args, **kwargs)
+
+    @property
+    def __call__(self):
+        """Wraps self"""
+        return self.func
 
     def __rlshift__(self, left):
         """Returns a partially applied infix operator"""
