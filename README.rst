@@ -22,6 +22,13 @@ Variant syntaxes
 
 Multiple infix syntaxes are provided by the ``infix`` module::
 
+    >>> @and_infix
+    ... def is_before(a, b):
+    ...     return a < b
+    ...
+    >>> print 1 &is_before& 5
+    True
+
     >>> @or_infix
     ... def minus(a, b):
     ...     return a - b

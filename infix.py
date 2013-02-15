@@ -1,6 +1,6 @@
 """The infix operator decorator"""
 
-__all__ = ['infix']
+__all__ = ['shift_infix', 'and_infix', 'or_infix', 'xor_infix']
 
 from functools import update_wrapper
 
@@ -28,6 +28,10 @@ class base_infix(object):
 class shift_infix(base_infix):
     __rlshift__ = base_infix.left
     __rshift__ = base_infix.right
+
+class and_infix(base_infix):
+    __rand__ = base_infix.left
+    __and__ = base_infix.right
 
 class or_infix(base_infix):
     __ror__ = base_infix.left
