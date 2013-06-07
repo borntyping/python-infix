@@ -1,5 +1,7 @@
 """The infix operator decorator"""
 
+from __future__ import print_function
+
 __all__ = ['shift_infix', 'and_infix', 'or_infix', 'xor_infix']
 
 from functools import update_wrapper
@@ -51,4 +53,6 @@ def custom_infix(left, right):
 
 if __name__ == "__main__":
     from doctest import testfile
-    testfile('README.rst', globs=locals())
+    failure_count, test_count = testfile('README.rst', globs=locals())
+    if failure_count > 0:
+        exit(1)
