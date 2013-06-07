@@ -2,6 +2,14 @@
 Infix
 =====
 
+.. image:: https://pypip.in/v/infix/badge.png
+    :target: https://pypi.python.org/pypi/infix/
+    :alt: Latest PyPI version
+
+.. image:: https://travis-ci.org/borntyping/python-infix.png
+    :target: https://travis-ci.org/borntyping/python-infix
+    :alt: Travis build status
+
 A decorator that allows functions to be used as infix functions.
 
 Infix operators are created and applied as such, and do not stop the function from being called normally::
