@@ -4,9 +4,9 @@ from setuptools import setup
 
 setup(
     name             = 'infix',
-    version          = '0.1',
+    version          = '1.0',
     license          = 'MIT License',
-    url              = 'https://github.com/borntyping/infix',
+    url              = 'https://github.com/borntyping/python-infix',
 
     author           = 'Sam Clements',
     author_email     = 'sam@borntyping.co.uk',
@@ -17,11 +17,16 @@ setup(
     py_modules       = ['infix'],
 
     classifiers      = [
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
         'Topic :: Software Development :: Libraries',
         'Topic :: Utilities',
     ],
