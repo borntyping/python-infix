@@ -2,64 +2,113 @@
 
 from __future__ import print_function
 
-__all__ = ['shift_infix', 'and_infix', 'or_infix', 'xor_infix', 'pow_infix']
+__all__ = ['shift_infix', 'and_infix', 'or_infix', 'xor_infix', 'pow_infix',
+          'mul_infix', 'add_infix', 'sub_infix', 'mod_infix', 'make_infix',
+          'all_infix','div_infix', 'floordiv_infix']
 
 from functools import update_wrapper
+import sys
+
+def lname(op):
+    """The left name of an op"""
+    return '__' + op + '__'
+
+def rname(op):
+    """The right name of an op, switches shifts"""
+    shifts = set(['lshift', 'rshift'])
+    if op in shifts:
+        op = list(shifts - set([op]))[0]
+    return '__r' + op + '__'
 
 class base_infix(object):
     """The base infix class"""
+    
+    op = () # The operations to use
     
     def __init__(self, func):
         """Creates the decorated function"""
         self.func = func
         update_wrapper(self, self.func)
+        ldict = dict()
+        rdict = dict()
+        for op in self.op:
+            ldict[lname(op)] = lbind.__call__
+            rdict[rname(op)] = rbind.__call__
+
+        self.lbind = type('_'.join(self.op)+'_lbind', (lbind,), ldict)
+        self.rbind = type('_'.join(self.op)+'_rbind', (rbind,), rdict)
 
     @property
     def __call__(self):
         """Wraps self"""
         return self.func
     
-    def left(self, left):
+    def left(self, other):
         """Returns a partially applied infix operator"""
-        self.__infix__ = left
-        return self
+        return self.rbind(self.func, other)
 
-    def right(self, right):
-        return self.func(self.__infix__, right)
+    def right(self, other):
+        return self.lbind(self.func, other)
 
-class pow_infix(base_infix):
-    def right(self, right):
-        return self.func(right, self.__infix__)
+# Allows binding
+# Idea from http://code.activestate.com/recipes/384122-infix-operators/
+
+class rbind(object):
+    def __init__(self, function, binded):
+        self.func = function
+        update_wrapper(self, self.func)
+        self.binded = binded
+    def __call__(self, other):
+        return self.func(other, self.binded)
+    def reverse(self, other):
+        return self.func(self.binded, other)
+    def __repr__(self):
+        return "<{0.__class__.__name__}: Waiting for left side>".format(self)
+
+class lbind(object):
+    def __init__(self, function, binded):
+        self.func = function
+        update_wrapper(self, self.func)
+        self.binded = binded
+    def __call__(self, other):
+        return self.func(self.binded, other)
+    def reverse(self, other):
+        return self.func(other, self.binded)
+    def __repr__(self):
+        return "<{0.__class__.__name__}: Waiting for right side>".format(self)
     
-    __pow__ = base_infix.left
-    __rpow__ = right
+def make_infix(*ops):
+    """Returns a custom infix type, using the given operation."""
+    ops = list(ops)
+    if 'div' in ops:
+        ops += ['truediv']
+    opdict = dict(op=ops)
+    for op in ops:
+        opdict[lname(op)] = base_infix.left
+        opdict[rname(op)] = base_infix.right
+    return type('_'.join(ops)+'_infix', (base_infix,), opdict)
 
-class shift_infix(base_infix):
-    __rlshift__ = base_infix.left
-    __rshift__ = base_infix.right
+def custom_infix(left, right = None):
+    """Legacy support for old notation."""
+    op = left[3:-2]
+    return make_infix(op)
 
-class and_infix(base_infix):
-    __rand__ = base_infix.left
-    __and__ = base_infix.right
-
-class or_infix(base_infix):
-    __ror__ = base_infix.left
-    __or__ = base_infix.right
-
-class xor_infix(base_infix):
-    __rxor__ = base_infix.left
-    __xor__ = base_infix.right
-
-def custom_infix(left, right):
-    """Returns a custom infix type, using the given left and right function
-    names"""
-    return type('custom_infix', (base_infix,), {
-        left: base_infix.left,
-        right: base_infix.right,
-    })
+or_infix = make_infix('or')
+mul_infix = make_infix('mul')
+pow_infix = make_infix('pow')
+shift_infix = make_infix('rshift')
+and_infix = make_infix('and')
+add_infix = make_infix('add')
+sub_infix = make_infix('sub')
+mod_infix = make_infix('mod')
+xor_infix = make_infix('xor')
+div_infix = make_infix('div')
+floordiv_infix = make_infix('floor_div')
+all_infix = make_infix('or', 'and', 'pow', 'mul', 'xor', 'lshift',
+                       'rshift', 'sub', 'mod', 'floordiv', 'div')
 
 if __name__ == "__main__":
     from doctest import testfile
     failure_count, test_count = testfile('README.rst', globs=locals())
     if failure_count > 0:
-        exit(1)
+        sys.exit(1)
