@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name             = 'infix',
-    version          = '1.0',
+    version          = '1.1',
     license          = 'MIT License',
     url              = 'https://github.com/borntyping/python-infix',
 
@@ -27,6 +27,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Software Development :: Libraries',
         'Topic :: Utilities',
     ],

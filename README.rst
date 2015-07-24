@@ -51,6 +51,13 @@ Multiple infix syntaxes are provided by the ``infix`` module::
     >>> print(list(1 ^until^ 10))
     [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+    >>> @pow_infix
+    ... def pow(a, b):
+    ...     return a**b
+    ...
+    >>> print(3 **pow** 2)
+    9
+
 Custom syntaxes
 ----------------
 
@@ -72,7 +79,7 @@ You should be careful to avoid using operands that the objects your functions wi
 Compatibility
 -------------
 
-Works on all major Python versions (2.6, 2.7, 3.2, 3.3).
+Works on all major Python versions (2.6, 2.7, 3.2, 3.3, 3.4).
 
 Tests
 -----

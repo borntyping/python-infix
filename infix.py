@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 
-__all__ = ['shift_infix', 'and_infix', 'or_infix', 'xor_infix']
+__all__ = ['shift_infix', 'and_infix', 'or_infix', 'xor_infix', 'pow_infix']
 
 from functools import update_wrapper
 
@@ -26,6 +26,13 @@ class base_infix(object):
 
     def right(self, right):
         return self.func(self.__infix__, right)
+
+class pow_infix(base_infix):
+    def right(self, right):
+        return self.func(right, self.__infix__)
+    
+    __pow__ = base_infix.left
+    __rpow__ = right
 
 class shift_infix(base_infix):
     __rlshift__ = base_infix.left
