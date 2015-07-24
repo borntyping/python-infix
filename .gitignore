@@ -14,3 +14,4 @@ lib
 lib64
 __pycache__
 pip-log.txt
+.tox
