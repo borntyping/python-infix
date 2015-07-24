@@ -72,7 +72,7 @@ You should be careful to avoid using operands that the objects your functions wi
 Compatibility
 -------------
 
-Works on all major Python versions (2.6, 2.7, 3.2, 3.3).
+Works on all major Python versions (2.6, 2.7, 3.2, 3.3, 3.4).
 
 Tests
 -----
