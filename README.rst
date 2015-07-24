@@ -69,7 +69,7 @@ Python has a large set of operators than could be overridden to provide the infi
 
     >>> @make_infix('mod','pow','rshift')
     ... def until(start, stop):
-    ...     return range(start, stop)
+    ...     return list(range(start, stop))
     >>> print(1 %until% 3)
     [1, 2]
     >>> print(2 <<until>> 4)
