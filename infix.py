@@ -25,10 +25,10 @@ class base_infix(object):
     
     op = () # The operations to use
     
-    def __init__(self, func):
+    def __init__(self, funct):
         """Creates the decorated function"""
-        self.func = func
-        update_wrapper(self, self.func)
+        self.funct = funct
+        update_wrapper(self, self.funct)
         ldict = dict()
         rdict = dict()
         for op in self.op:
@@ -41,39 +41,39 @@ class base_infix(object):
     @property
     def __call__(self):
         """Wraps self"""
-        return self.func
+        return self.funct
     
     def left(self, other):
         """Returns a partially applied infix operator"""
-        return self.rbind(self.func, other)
+        return self.rbind(self.funct, other)
 
     def right(self, other):
-        return self.lbind(self.func, other)
+        return self.lbind(self.funct, other)
 
 # Allows binding
 # Idea from http://code.activestate.com/recipes/384122-infix-operators/
 
 class rbind(object):
     def __init__(self, function, binded):
-        self.func = function
-        update_wrapper(self, self.func)
+        self.funct = function
+        update_wrapper(self, self.funct)
         self.binded = binded
     def __call__(self, other):
-        return self.func(other, self.binded)
+        return self.funct(other, self.binded)
     def reverse(self, other):
-        return self.func(self.binded, other)
+        return self.funct(self.binded, other)
     def __repr__(self):
         return "<{0.__class__.__name__}: Waiting for left side>".format(self)
 
 class lbind(object):
     def __init__(self, function, binded):
-        self.func = function
-        update_wrapper(self, self.func)
+        self.funct = function
+        update_wrapper(self, self.funct)
         self.binded = binded
     def __call__(self, other):
-        return self.func(self.binded, other)
+        return self.funct(self.binded, other)
     def reverse(self, other):
-        return self.func(other, self.binded)
+        return self.funct(other, self.binded)
     def __repr__(self):
         return "<{0.__class__.__name__}: Waiting for right side>".format(self)
     

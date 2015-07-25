@@ -79,7 +79,7 @@ Python has a large set of operators than could be overridden to provide the infi
     >>> print(until(10,12))
     [10, 11]
 
-.. versionadded:: 1.1
+.. versionadded:: 1.2
 
 The old ``custom_infix`` is still supported. It takes two parameters, the names of the left and right operator functions, though only the first is important::
 
@@ -104,7 +104,22 @@ The library now uses a binding feature to generate a temporary object halfway th
     >>> 3**pow
     <pow_lbind: Waiting for right side>
 
-.. versionadded:: 1.1
+
+.. versionadded:: 1.2
+
+Example: Currying
+-----------------
+
+One possible use is in curring functions in Python. You can easily define a
+curry function::
+
+    >>> from functools import partial
+    >>> curry = or_infix(partial)
+    >>> def volume(x, y, z):
+    ...    return x * y * z
+    >>> tot = volume |curry| 2 |curry| 3 |curry| 4
+    >>> tot()
+    24
 
 Compatibility
 -------------
