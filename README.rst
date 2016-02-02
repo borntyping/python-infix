@@ -2,11 +2,11 @@
 Infix
 =====
 
-.. image:: https://pypip.in/v/infix/badge.png
+.. image:: http://img.shields.io/pypi/v/infix.svg
     :target: https://pypi.python.org/pypi/infix/
     :alt: Latest PyPI version
 
-.. image:: https://travis-ci.org/borntyping/python-infix.png
+.. image:: https://travis-ci.org/borntyping/python-infix.svg
     :target: https://travis-ci.org/borntyping/python-infix
     :alt: Travis build status
 
