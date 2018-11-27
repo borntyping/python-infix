@@ -10,6 +10,8 @@ Infix
     :target: https://travis-ci.org/borntyping/python-infix
     :alt: Travis build status
 
+**This project is an unmaintained experiment. Don't use it for production code.**
+
 A decorator that allows functions to be used as infix functions.
 
 Infix operators are created and applied as such, and do not stop the function from being called normally::
